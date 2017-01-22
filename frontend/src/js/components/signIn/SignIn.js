@@ -1,14 +1,10 @@
 import React from 'react'
 import axiosInstance from '../../config'
-import classNames from 'classnames'
 
-class Register extends React.Component {
+class SignIn extends React.Component{
     constructor() {
         super()
-        this.state = {
-            error: null,
-            success: null
-        }
+        this.state = {}
     }
 
     updateInputValue(evt) {
@@ -18,13 +14,11 @@ class Register extends React.Component {
     }
 
     send() {
-        axiosInstance.post('/register', {
+        axiosInstance.post('/signin', {
             name: this.state.name,
             password: this.state.password
-        }).then((res) => {
-            this.setState({
-                success: res.data.success
-            })
+        }).then((response) => {
+            console.log(response)
         })
     }
 
@@ -40,7 +34,7 @@ class Register extends React.Component {
                             <input type="password" id="password" className="form-control" onChange={this.updateInputValue.bind(this)}/>
                             <br/>
                             <div className="col-md-6 col-md-offset-3 text-center">
-                                <button className="btn btn-info" onClick={this.send.bind(this)}>Registrar</button>
+                                <button className="btn btn-info" onClick={this.send.bind(this)}>Logar</button>
                             </div>
                         </div>
                     </div>
@@ -50,4 +44,4 @@ class Register extends React.Component {
     }
 }
 
-export default Register
+export default SignIn

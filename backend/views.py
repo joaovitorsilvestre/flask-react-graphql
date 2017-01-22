@@ -14,9 +14,29 @@ def register():
     if request.method == "POST":
         json_dict = request.get_json()
 
+        name = json_dict.get('name')
+        password = json_dict.get('password')
+
+        if name and password:
+            user = User(name=name, password=password).save()
+            return jsonify({'success': user.name + ' foi criado com sucesso'}), 200
+        else:
+            return jsonify({'error': 'Campos errados'}), 403
+
+
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
+    from backend.User.models import User
+
+    if request.method == 'POST':
+        json_dict = request.get_json()
+
         name = json_dict['name']
-        cpf = json_dict['cpf']
+        password = json_dict['password']
 
-        user = User(name=name, cpf=cpf).save()
+        user = User.objects(name=name, password=password).first()
 
-        return user.name + ' foi criado com sucesso'
+        if user:
+            return jsonify({'success': 'Login realizado com sucesso'}), 200
+        else:
+            return jsonify({'error': 'Nome ou senha invalidos'}), 403
