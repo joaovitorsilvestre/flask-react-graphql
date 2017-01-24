@@ -40,3 +40,18 @@ def signin():
             return jsonify({'success': 'Login realizado com sucesso'}), 200
         else:
             return jsonify({'error': 'Nome ou senha invalidos'}), 403
+
+@app.route('/create-product', methods=['GET', 'POST'])
+def create_product():
+    from backend.Product.models import Product
+
+    if request.method == 'POST':
+        json_dict = request.get_json()
+
+        name = json_dict['name']
+        price = json_dict['price']
+        if name and price:
+            product = Product(name=name, price=price).save()
+            return jsonify({'success': product.name + ' foi criado com sucesso'}), 200
+        else:
+            return jsonify({'error': 'Compos errados'}), 403

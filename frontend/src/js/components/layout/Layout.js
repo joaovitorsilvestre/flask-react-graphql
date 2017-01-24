@@ -17,13 +17,19 @@ class Layout extends React.Component {
                         </div>
                         <ul className="nav navbar-nav">
                             <li className={this.actualPath('/')}>
-                                <Link className="active" to="/">Home</Link>
+                                <Link className="active" to="/">Inicio</Link>
                             </li>
                             <li className={this.actualPath('/register')}>
-                                <Link to="register">Register</Link>
+                                <Link to="register">Registrar-se</Link>
                             </li>
                             <li className={this.actualPath('/signIn')}>
-                                <Link to="signIn">Sign In</Link>
+                                <Link to="signIn">Logar</Link>
+                            </li>
+                            <li className={this.actualPath('/create-products')}>
+                                <Link to="create-products">Criar Produto</Link>
+                            </li>
+                            <li className={this.actualPath('/products')}>
+                                <Link to="products">Produtos</Link>
                             </li>
                             <li><a href="">{this.props.location.pathname}</a></li>
                         </ul>

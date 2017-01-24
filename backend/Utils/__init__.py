@@ -1,8 +1,28 @@
-# author: mixxorz
-
 from graphql.utils.ast_to_dict import ast_to_dict
 
+def generic_resolver(mongoObject, grapheneObject, args, info):
+    fields = [k for k, v in get_fields(info).items()]
+    result = mongoObject.objects(**args).only(*fields).first()
 
+    if result:
+        a = {f: getattr(result, f) for f in fields}
+        return grapheneObject(**a)
+    else:
+        return None
+
+def generic_resolver_list(mongoObject, grapheneObject, args, info):
+    fields = [k for k, v in get_fields(info).items()]
+    users = mongoObject.objects(**args).only(*fields)
+
+    if users:
+        def get_user_attrs(u):
+            return {f: getattr(u, f) for f in fields}
+
+        return [grapheneObject(**get_user_attrs(u)) for u in users]
+    else:
+        return []
+
+# author: mixxorz
 def collect_fields(node, fragments):
     """Recursively collects fields from the AST
     Args:
@@ -31,6 +51,7 @@ def collect_fields(node, fragments):
 
     return field
 
+# author: mixxorz
 def get_fields(info):
     """A convenience function to call collect_fields with info
     Args:
