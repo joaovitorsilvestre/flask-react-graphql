@@ -15,3 +15,4 @@ db.init_app(app)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 from backend import views
+from backend.GraphqlSchema import schema

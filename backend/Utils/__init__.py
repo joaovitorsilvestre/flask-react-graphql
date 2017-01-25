@@ -1,7 +1,7 @@
 from graphql.utils.ast_to_dict import ast_to_dict
 
 def generic_resolver(mongoObject, grapheneObject, args, info):
-    fields = [k for k, v in get_fields(info).items()]
+    fields = [k for k, v in get_fields(info).items() if k[:2] != '__']
     result = mongoObject.objects(**args).only(*fields).first()
 
     if result:
@@ -11,7 +11,7 @@ def generic_resolver(mongoObject, grapheneObject, args, info):
         return None
 
 def generic_resolver_list(mongoObject, grapheneObject, args, info):
-    fields = [k for k, v in get_fields(info).items()]
+    fields = [k for k, v in get_fields(info).items() if k[:2] != '__']
     users = mongoObject.objects(**args).only(*fields)
 
     if users:

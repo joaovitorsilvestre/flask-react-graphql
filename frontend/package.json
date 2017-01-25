@@ -4,6 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
+    "apollo-client": "^0.8.0",
     "axios": "^0.15.3",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.0",
@@ -15,8 +16,10 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "classnames": "^2.2.5",
+    "graphql-tag": "^1.2.3",
     "history": "^1.17.0",
     "react": "^0.14.6",
+    "react-apollo": "^0.8.3",
     "react-dom": "^0.14.6",
     "react-router": "^1.0.3",
     "webpack": "^1.12.9",
