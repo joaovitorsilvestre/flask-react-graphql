@@ -1,8 +1,19 @@
 import graphene
 
 from backend.User.models import User
-from backend.Utils import generic_resolver, generic_resolver_list
+from backend.Utils import generic_resolver, generic_resolver_list, generic_object_creator
 
+class CreateUser(graphene.Mutation):
+    class Input:
+        name = graphene.String()
+        password = graphene.String()
+
+    user = graphene.Field(lambda: UserSchema)
+    ok = graphene.Boolean()
+
+    def mutate(self, args, context, info):
+        user = generic_object_creator(User, args)
+        return CreateUser(user=user, ok=user is not None)
 
 class UserSchema(graphene.ObjectType):
     name = graphene.String()

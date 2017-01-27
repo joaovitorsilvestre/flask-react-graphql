@@ -4,12 +4,12 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 
-import Layout from "./components/layout/Layout"
-import Home from "./components/home/Home"
-import Register from "./components/register/Register"
-import SignIn from "./components/signIn/SignIn"
-import CreateProducts from "./components/createProducts/CreateProducts"
-import Products from "./components/products/Products"
+import Layout from "./components/Layout"
+import Home from "./components/Home"
+import Register from "./components/sign/Register"
+import SignIn from "./components/sign/SignIn"
+import CreateProducts from "./components/CreateProducts"
+import Products from "./components/Products"
 
 const app = document.getElementById('app');
 

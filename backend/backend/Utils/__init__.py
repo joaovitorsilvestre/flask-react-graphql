@@ -1,5 +1,9 @@
 from graphql.utils.ast_to_dict import ast_to_dict
 
+def generic_object_creator(mongoObject, args):
+    result = mongoObject(**args).save()
+    return result
+
 def generic_resolver(mongoObject, grapheneObject, args, info):
     fields = [k for k, v in get_fields(info).items() if k[:2] != '__']
     result = mongoObject.objects(**args).only(*fields).first()

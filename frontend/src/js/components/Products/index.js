@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import Product from './Product/Product'
+import Product from './Product'
 
 class Products extends React.Component {
 
@@ -26,8 +26,8 @@ class Products extends React.Component {
 
         return (
             <div className="row">
-                {this.props.data.products.map((product) => {
-                    return <Product name={product.name} price={product.price} ></Product>
+                {this.props.data.products.map((product, index) => {
+                    return <Product name={product.name} price={product.price} key={index} ></Product>
                 })}
             </div>
         )
