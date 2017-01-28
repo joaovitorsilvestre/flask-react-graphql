@@ -1,7 +1,7 @@
 import graphene
 
 from backend.Product.models import Product
-from backend.Utils import get_fields, generic_resolver, generic_resolver_list, generic_object_creator
+from backend.Utils import generic_resolver, generic_resolver_list, generic_object_creator
 
 class CreateProduct(graphene.Mutation):
     class Input:

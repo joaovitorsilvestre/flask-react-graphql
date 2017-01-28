@@ -38,3 +38,18 @@ class UserSchema(graphene.ObjectType):
             'name': graphene.String(),
             'passoword': graphene.String()
         }
+
+
+class Me(graphene.ObjectType):
+    name = graphene.String()
+
+    @staticmethod
+    def resolver(root, args, context, info):
+        from flask_login import current_user
+        return Me(name=current_user.name) if current_user.is_active else None
+
+    @staticmethod
+    def fields_types():
+        return {
+            'name': graphene.String(),
+        }

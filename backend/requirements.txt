@@ -4,6 +4,7 @@ decorator==4.0.11
 Flask==0.12
 Flask-Cors==3.0.2
 Flask-GraphQL==1.4.0
+Flask-Login==0.4.0
 flask-mongoengine==0.8.2
 Flask-WTF==0.14.2
 graphene==1.1.3

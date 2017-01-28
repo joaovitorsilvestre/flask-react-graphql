@@ -8,7 +8,7 @@ import Layout from "./components/Layout"
 import Home from "./components/Home"
 import Register from "./components/sign/Register"
 import SignIn from "./components/sign/SignIn"
-import CreateProducts from "./components/CreateProducts"
+import CreateProducts from "./components/Products/CreateProducts"
 import Products from "./components/Products"
 
 const app = document.getElementById('app');
@@ -24,7 +24,7 @@ ReactDOM.render(
                 <IndexRoute component={Home}></IndexRoute>
                 <Route path="register" component={Register}></Route>
                 <Route path="signin" component={SignIn}></Route>
-                <Route path="create-products" component={CreateProducts}></Route>
+                <Route path="create-product" component={CreateProducts}></Route>
                 <Route path="products" component={Products}></Route>
             </Route>
         </Router>
