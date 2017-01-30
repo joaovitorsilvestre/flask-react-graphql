@@ -1,7 +1,9 @@
+from flask_login import current_user
 import graphene
 
 from backend.User.models import User
 from backend.Utils import generic_resolver, generic_resolver_list, generic_object_creator
+
 
 class CreateUser(graphene.Mutation):
     class Input:
@@ -45,8 +47,7 @@ class Me(graphene.ObjectType):
 
     @staticmethod
     def resolver(root, args, context, info):
-        from flask_login import current_user
-        return Me(name=current_user.name) if current_user.is_active else None
+        return Me(name=current_user.name) if current_user.is_authenticated else None
 
     @staticmethod
     def fields_types():

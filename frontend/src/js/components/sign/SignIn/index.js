@@ -1,5 +1,8 @@
 import React from 'react'
 import axiosInstance from '../../../config'
+import { withApollo } from 'react-apollo'
+import ApolloClient from 'apollo-client';
+import gql from 'graphql-tag'
 
 class SignIn extends React.Component{
     constructor() {
@@ -18,7 +21,13 @@ class SignIn extends React.Component{
             name: this.state.name,
             password: this.state.password
         }).then((response) => {
-            console.log(response)
+            this.props.client.query({
+                query: gql` query me {
+                    me {
+                        name
+                    }
+                }`
+            });
         })
     }
 
@@ -43,5 +52,10 @@ class SignIn extends React.Component{
         )
     }
 }
+SignIn.propTypes = {
+    client: React.PropTypes.instanceOf(ApolloClient).isRequired,
+}
 
-export default SignIn
+const MyComponentWithApollo = withApollo(SignIn);
+
+export default MyComponentWithApollo
