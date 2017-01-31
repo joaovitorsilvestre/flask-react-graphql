@@ -1,6 +1,8 @@
 from flask_login import current_user
 import graphene
 
+from backend import redis_store
+
 from backend.User.models import User
 from backend.Utils import generic_resolver, generic_resolver_list, generic_object_creator
 
@@ -47,7 +49,14 @@ class Me(graphene.ObjectType):
 
     @staticmethod
     def resolver(root, args, context, info):
-        return Me(name=current_user.name) if current_user.is_authenticated else None
+        auth = context.headers['Authorization']
+
+        if len(auth) == 100:
+            user_id = redis_store.get(auth).decode("utf-8")
+            user = User.objects(id=user_id).only(**args).first()
+            return Me(name=user.name)
+
+        return None
 
     @staticmethod
     def fields_types():

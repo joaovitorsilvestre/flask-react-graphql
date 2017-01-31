@@ -1,4 +1,5 @@
 import React from "react";
+import cookie from 'react-cookie';
 import ReactDOM from "react-dom";
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
@@ -13,9 +14,18 @@ import Products from "./components/Products"
 
 const app = document.getElementById('app');
 
-const client = new ApolloClient({
-  networkInterface: createNetworkInterface({ uri: 'http://localhost:5000/graphql' }),
+const networkInterface = createNetworkInterface('http://localhost:5000/graphql', {
+    uri: 'http://localhost:5000/graphql',
+    headers: {
+        Authorization: cookie.load('secret')
+    },
+    opts: {
+        credentials: 'same-origin',
+    },
 });
+
+const client = new ApolloClient({ networkInterface });
+
 
 ReactDOM.render(
     <ApolloProvider client={client}>

@@ -1,16 +1,8 @@
-from flask import render_template, request, jsonify
-from flask_login import LoginManager, login_user, current_user
+import random, string
 
-from backend import app
+from flask import Response, request, jsonify
 
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-@login_manager.user_loader
-def load_user(id):
-    from backend.User.models import User
-    return User.objects.get(int(id))
+from backend import app, redis_store
 
 @app.route('/signin', methods=['POST'])
 def signin():
@@ -23,8 +15,9 @@ def signin():
     user = User.objects(name=name, password=password).first()
 
     if user:
-        login_user(user)
-        return jsonify({'success': 'Login realizado com sucesso'}), 200
+        secret = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(100))
+        redis_store.set(secret, user.id)
+        return jsonify({'success': 'Login realizado com sucesso', 'secret': secret}), 200
     else:
         return jsonify({'error': 'Nome ou senha invalidos'}), 403
 

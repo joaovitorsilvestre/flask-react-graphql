@@ -1,4 +1,5 @@
 import React from 'react'
+import cookie from 'react-cookie';
 import axiosInstance from '../../../config'
 import { withApollo } from 'react-apollo'
 import ApolloClient from 'apollo-client';
@@ -21,6 +22,8 @@ class SignIn extends React.Component{
             name: this.state.name,
             password: this.state.password
         }).then((response) => {
+            console.log(response);
+            cookie.save('secret', response.data.secret)
             this.props.client.query({
                 query: gql` query me {
                     me {
