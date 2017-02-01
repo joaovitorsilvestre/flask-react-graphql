@@ -12,7 +12,13 @@ class User(db.Document):
 def resolve_name(self, args, context, info):
     return self.name or 'joao'
 
-SubClass = type('UserSchema', (graphene.ObjectType,), dict(name=graphene.String(), password=graphene.String(), resolve_name=resolve_name))
+fields = User._fields
+
+for k, v in fields.items():
+    if isinstance(v, db.StringField):
+        fields[k] = graphene.String()
+
+SubClass = type('UserSchema', (graphene.ObjectType,), dict(resolve_name=resolve_name, **fields))
 
 
 
