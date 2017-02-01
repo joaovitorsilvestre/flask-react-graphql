@@ -17,20 +17,28 @@ class SignIn extends React.Component{
         })
     }
 
+    runQuery() {
+        console.log('runing query')
+        this.props.client.query({
+            query: gql` query me {
+                    me {
+                        name
+                    }
+                }`
+        });
+    }
+
     send() {
         axiosInstance.post('/signin', {
             name: this.state.name,
             password: this.state.password
         }).then((response) => {
             console.log(response);
-            cookie.save('secret', response.data.secret)
-            this.props.client.query({
-                query: gql` query me {
-                    me {
-                        name
-                    }
-                }`
-            });
+            if (response.data.success) {
+                cookie.save('secret', response.data.secret)
+                this.runQuery()
+                this.props.history.push('/')
+            }
         })
     }
 

@@ -35,3 +35,12 @@ def register():
         return jsonify({'success': 'Conta criada com sucesso'}), 200
     else:
         return jsonify({'error': 'Algo errado não está certo'}), 500
+
+
+@app.route('/logout/<secret>', methods=['GET'])
+def logout(secret):
+    if secret:
+        del redis_store['secret']
+        return jsonify({'success': 'Logout com sucesso'}), 200
+    else:
+        return jsonify({'error': 'Você não está logado'}), 403
