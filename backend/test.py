@@ -1,6 +1,7 @@
 from mongoengine import *
 from six import with_metaclass
 from tools import MyMetaClass
+from backend.Utils import generic_resolver
 import graphene
 
 connect('testing')
@@ -13,14 +14,13 @@ class User(Document):
 class UserSchema(with_metaclass(MyMetaClass, graphene.ObjectType)):
     __MODEL__ = User
 
+    @classmethod
+    def resolve_user(cls, root, args, context, info):
+        model = cls.__MODEL__
+        return generic_resolver(model, UserSchema, args, info)
+
 class Query(graphene.ObjectType):
-    user = graphene.Field(UserSchema, name=graphene.String(),
-                          password=graphene.String())
-
-    def resolve_user(self, args, context, info):
-        user = User.objects(name=args.get('name')).first()
-        return UserSchema(name=user.name, password=user.password)
-
+    user = graphene.Field(UserSchema, **UserSchema.fields, resolver=UserSchema.resolve_user)
 
 schema = graphene.Schema(query=Query)
 
